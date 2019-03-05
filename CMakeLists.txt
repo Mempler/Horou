@@ -4,8 +4,10 @@ project(Horou CXX)
 set(CMAKE_CXX_STANDARD 11)
 
 find_package(Boost 1.65.1 REQUIRED system)
+find_package(OpenSSL REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(${OPENSSL_INCLUDE_DIR})
 
 add_executable(Horou src/main.cpp
         src/io/network/http/Server.cpp src/io/network/http/Server.h
@@ -19,6 +21,7 @@ add_executable(Horou src/main.cpp
         src/io/buffer/BinaryBuffer.cpp src/io/buffer/BinaryBuffer.h
         src/io/packets/Packet.cpp src/io/packets/Packet.h
         src/io/packets/PacketId.h src/io/packets/server_packets/fun/Announce.cpp
-        src/io/packets/server_packets/fun/Announce.h src/io/packets/server_packets/LoginResponse.cpp src/io/packets/server_packets/LoginResponse.h)
+        src/io/packets/server_packets/fun/Announce.h src/io/packets/server_packets/LoginResponse.cpp
+        src/io/packets/server_packets/LoginResponse.h)
 
-target_link_libraries(Horou pthread ${Boost_LIBRARIES})
+target_link_libraries(Horou pthread ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
