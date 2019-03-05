@@ -12,17 +12,31 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include "HTTPHandler.h"
+#ifndef HOROU_LOGINRESPONSE_H
+#define HOROU_LOGINRESPONSE_H
 
-void HTTPHandler(http::Request& req, http::Response& res) {
+#include "../Packet.h"
 
-    if (req.GetMethod() == http::Method::POST) {
+namespace Packets {
+    enum LoginResponses : int32_t {
+        Failed = -1,
+        Outdated = -2,
+        Banned = -3,
+        MultiAcc = -4,
+        Exception = -5,
+        SupporterOnly = -6,
+        PasswordReset = -7,
+        TwoFactorAuth = -8
+    };
 
-    } else {
-        TextBuffer buff;
-        buff.WriteLine("No u");
-        res.Write(&buff);
-    }
+    class LoginResponse : public Packet {
 
-    res.Close();
+    public:
+        LoginResponse(LoginResponses response);
+        LoginResponse(int32_t response);
+        LoginResponse(uint32_t response);
+
+    };
 }
+
+#endif //HOROU_LOGINRESPONSE_H

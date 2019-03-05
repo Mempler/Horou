@@ -12,21 +12,19 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
-#include <thread>
+#ifndef HOROU_ANNOUNCE_H
+#define HOROU_ANNOUNCE_H
 
-#include "io/network/http/Server.h"
-#include "handlers/bancho/HTTPHandler.h"
+#include <string>
 
-using namespace boost;
+#include "../../Packet.h"
 
-int main() {
-    asio::io_service IO_Service;
-
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-    server.RegisterHandler("/", HTTPHandler);
-    server.Start();
-
-    return 0;
+namespace Packets {
+    class Announce : public Packet {
+    public:
+        explicit Announce(std::string str);
+    private:
+    };
 }
+
+#endif //HOROU_ANNOUNCE_H

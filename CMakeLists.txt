@@ -14,8 +14,11 @@ add_executable(Horou src/main.cpp
         src/io/network/http/Request.cpp src/io/network/http/Request.h
         src/io/network/http/Response.cpp src/io/network/http/Response.h
         src/utils/StringUtils.cpp src/utils/StringUtils.h
-        src/handlers/HTTPHandler.cpp src/handlers/HTTPHandler.h
+        src/handlers/bancho/HTTPHandler.cpp src/handlers/bancho/HTTPHandler.h
         src/io/network/http/Method.h
-        src/io/buffer/BinaryBuffer.cpp src/io/buffer/BinaryBuffer.h)
+        src/io/buffer/BinaryBuffer.cpp src/io/buffer/BinaryBuffer.h
+        src/io/packets/Packet.cpp src/io/packets/Packet.h
+        src/io/packets/PacketId.h src/io/packets/server_packets/fun/Announce.cpp
+        src/io/packets/server_packets/fun/Announce.h src/io/packets/server_packets/LoginResponse.cpp src/io/packets/server_packets/LoginResponse.h)
 
 target_link_libraries(Horou pthread ${Boost_LIBRARIES})

@@ -12,21 +12,21 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
-#include <thread>
+#include "LoginResponse.h"
 
-#include "io/network/http/Server.h"
-#include "handlers/bancho/HTTPHandler.h"
+namespace Packets {
+    LoginResponse::LoginResponse(Packets::LoginResponses response) {
+        this->SetPacketId(PacketId::ServerLoginResponse);
+        this->GetBinaryBuffer()->Write(response);
+    }
 
-using namespace boost;
+    LoginResponse::LoginResponse(int32_t response) {
+        this->SetPacketId(PacketId::ServerLoginResponse);
+        this->GetBinaryBuffer()->Write(response);
+    }
 
-int main() {
-    asio::io_service IO_Service;
-
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-    server.RegisterHandler("/", HTTPHandler);
-    server.Start();
-
-    return 0;
+    LoginResponse::LoginResponse(uint32_t response) {
+        this->SetPacketId(PacketId::ServerLoginResponse);
+        this->GetBinaryBuffer()->Write(response);
+    }
 }

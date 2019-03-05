@@ -51,6 +51,7 @@ void BinaryBuffer::Write(std::string val, bool nullable) {
         this->WriteByte(0);
     else {
         this->WriteByte(0x0b);
+        this->WriteULEB128(val.size());
         for (int i = 0; i < val.size() -1; ++i)
             this->WriteByte((uint8_t) val[i]);
     }

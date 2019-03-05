@@ -12,12 +12,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#ifndef HOROU_HTTPHANDLER_H
-#define HOROU_HTTPHANDLER_H
+#include "Announce.h"
 
-#include "../io/network/http/Request.h"
-#include "../io/network/http/Response.h"
-
-void HTTPHandler(http::Request& req, http::Response& res);
-
-#endif //HOROU_HTTPHANDLER_H
+namespace Packets {
+    Announce::Announce(std::string str) {
+        this->SetPacketId(PacketId::ServerAnnounce);
+        this->GetBinaryBuffer()->Write(std::move(str), false);
+    }
+}

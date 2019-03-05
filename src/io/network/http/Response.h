@@ -32,6 +32,8 @@ namespace http {
 
         void Write(Buffer* buff);
         void Close();
+
+        Buffer* GetBuffer() { return &this->mBuffer; }
     private:
         int mStatusNumber;
         std::string mStatusText;
