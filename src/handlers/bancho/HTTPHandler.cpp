@@ -18,18 +18,21 @@ copies or substantial portions of the Software.
 
 void HTTPHandler(http::Request& req, http::Response& res) {
     res.SetHeader("cho-protocol", "19");
-    res.SetHeader("Content-Type", "text/html; charset=UTF-8");
+    res.SetHeader("cho-token",    "109");
     res.SetHeader("cho-server",   "Horou (https://github.com/Mempler/Horou)");
 
+    res.SetContentType("text/html; charset=UTF-8");
+
     if (req.GetMethod() == http::Method::POST) {
+        Packets::LoginResponse p1(101);
+        p1.WriteBytes(res.GetBuffer());
+
+        p1.DumpToLog();
+
         Packets::Announce p("Hello C++");
         p.WriteBytes(res.GetBuffer());
 
         p.DumpToLog();
-
-        Packets::LoginResponse p1(101);
-        p1.WriteBytes(res.GetBuffer());
-        p1.DumpToLog();
     } else {
         TextBuffer buff;
         buff.WriteLine("No u");

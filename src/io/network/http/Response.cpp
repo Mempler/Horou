@@ -88,10 +88,6 @@ namespace http {
         buff.WriteLine("HTTP/1.0 " + std::to_string(this->mStatusNumber) + " " + this->mStatusText);
         auto it = this->mHeaders.begin();
 
-        buff.WriteLine("Cache-Control: no-cache");
-
-        buff.WriteLine("Server: Horou");
-
         time_t rawtime;
         struct tm * timeinfo;
         char buffer[80];
@@ -103,16 +99,16 @@ namespace http {
         std::string str(buffer);
 
         buff.WriteLine("Date: " + str);
-        buff.WriteLine("Connection: close");
+        buff.WriteLine("Server: Horou");
+        buff.WriteLine("Content-Transfer-Encoding: binary");
+        buff.WriteLine("Content-Type: " + this->mContentType);
+        buff.WriteLine("Content-Length: " + std::to_string(this->mBuffer.Size()));
 
         while(it != this->mHeaders.end())
         {
             buff.WriteLine(it->first + ": " + it->second);
             it++;
         }
-
-        buff.WriteLine("Content-Type: " + this->mContentType);
-        buff.WriteLine("Content-Length: " + std::to_string(this->mBuffer.Size() - 1));
 
         buff.WriteLine("");
 

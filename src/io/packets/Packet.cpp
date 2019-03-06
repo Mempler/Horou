@@ -20,22 +20,19 @@ void Packets::Packet::WriteBytes(Buffer* buff) {
     auto b = (BinaryBuffer*) buff;
 
     b->Write(this->mId);
-    b->Write((uint8_t) 0x00);
-    b->Write((int32_t) this->GetBuffer()->Size());
+    b->Write(false);
+    b->Write((uint32_t) this->GetBuffer()->Size());
     b->Append(this->GetBuffer());
 }
 
 void Packets::Packet::DumpToLog() {
-    std::cout << "PacketId: " << std::hex << (int32_t) this->GetPacketId() << std::endl;
+    std::cout << "PacketId: " << (int32_t) this->GetPacketId() << std::endl;
 
-    std::cout << "Size: " << std::to_string(this->mBuffer.Size()) << std::endl;
-    std::cout << "PacketData: [ ";
+    this->mBuffer.DumpToLog();
 
-    const char* b = this->mBuffer.GetBytes();
-    size_t bs = this->mBuffer.Size();
+    std::cout << std::endl <<  "Written Packet: " << std::endl;
 
-    for (int i = 0; i < bs -1; ++i)
-        std::cout << std::to_string(b[i]) << ", ";
-
-    std::cout << (int32_t) b[bs] << " ]" << std::endl << std::flush;
+    Buffer buff;
+    this->WriteBytes(&buff);
+    buff.DumpToLog();
 }

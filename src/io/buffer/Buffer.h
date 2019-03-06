@@ -34,6 +34,8 @@ public:
     const char* GetBytes();
     size_t Size();
 
+    void DumpToLog();
+
 protected:
     size_t mWritten = 0;
     size_t mReaded  = 0;

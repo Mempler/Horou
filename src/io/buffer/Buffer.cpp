@@ -14,6 +14,8 @@ copies or substantial portions of the Software.
 
 #include "Buffer.h"
 
+#include <iostream>
+
 Buffer::Buffer(char* buff, size_t len) { this->Append(buff, len); }
 
 Buffer::Buffer(Buffer* buff) { this->Append(buff); }
@@ -47,4 +49,17 @@ void Buffer::Append(Buffer* buff) {
 const char* Buffer::GetBytes() { return (const char*) this->mData.data(); }
 
 size_t Buffer::Size() { return this->mData.size(); }
+
+void Buffer::DumpToLog() {
+    std::cout << "Size: " << std::to_string(this->Size()) << std::endl;
+    std::cout << "Buffer: [ ";
+
+    const char* b = this->GetBytes();
+    size_t bs = this->Size();
+
+    for (int i = 0; i < bs -1; ++i)
+        std::cout << std::to_string(b[i]) << ", ";
+
+    std::cout << (int32_t) b[bs] << " ]" << std::endl << std::flush;
+}
 

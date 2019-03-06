@@ -25,14 +25,14 @@ public:
     template <typename T>
     void Write(T v) {
         this->Allocate(sizeof(T));
-        std::memcpy(this->mData.data() + this->mWritten, &v, sizeof(T));
+        std::memcpy(&this->mData[0] + this->mWritten, &v, sizeof(T));
         this->mWritten += sizeof(T);
     }
 
     template <typename T>
     T Read() {
         T v;
-        std::memcpy(&v, this->mData.data() + this->mWritten, sizeof(T));
+        std::memcpy(&v, &this->mData[0] + this->mReaded, sizeof(T));
         this->mReaded += sizeof(T);
     }
 
