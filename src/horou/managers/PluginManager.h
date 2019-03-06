@@ -12,21 +12,17 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
-#include <thread>
+#ifndef HOROU_PLUGINMANAGER_H
+#define HOROU_PLUGINMANAGER_H
 
-#include "io/network/http/Server.h"
-#include "handlers/bancho/HTTPHandler.h"
+class Plugin {
+public:
+private:
+protected:
+};
 
-using namespace boost;
+class PluginManager {
 
-int main() {
-    asio::io_service IO_Service;
+};
 
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-    server.RegisterHandler("/", HTTPHandler);
-    server.Start();
-
-    return 0;
-}
+#endif //HOROU_PLUGINMANAGER_H

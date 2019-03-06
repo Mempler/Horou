@@ -13,8 +13,8 @@ copies or substantial portions of the Software.
 */
 
 #include "HTTPHandler.h"
-#include "../../io/packets/server_packets/fun/Announce.h"
-#include "../../io/packets/server_packets/LoginResponse.h"
+#include "../../../libhorou/io/packets/server_packets/fun/Announce.h"
+#include "../../../libhorou/io/packets/server_packets/LoginResponse.h"
 
 void HTTPHandler(http::Request& req, http::Response& res) {
     res.SetHeader("cho-protocol", "19");
