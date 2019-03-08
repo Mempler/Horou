@@ -14,8 +14,17 @@ copies or substantial portions of the Software.
 
 #include <Plugin.h>
 
+#include <iostream>
+
 MAKE_PLUGIN(horou_core) {
 public:
+    void PluginInit(http::Server* server) override {
+        std::cout << "Call" << std::endl;
+    }
+
+    void PluginEntry() override {
+        std::cout << "Call" << std::endl;
+    }
 private:
 protected:
 };

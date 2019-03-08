@@ -15,18 +15,19 @@ copies or substantial portions of the Software.
 #ifndef HOROU_PLUGIN_H
 #define HOROU_PLUGIN_H
 
-#define __PRIVATE __attribute__ ((visibility ("hidden")))
-#define __PUBLIC __attribute__ ((visibility ("default")))
+#define __PUBLIC extern "C"
 
-#define MAKE_PLUGIN(class_name) class __PUBLIC class_name : public Plugin
+#define MAKE_PLUGIN(class_name) __PUBLIC class class_name : public Plugin
 
 #define EXPORT_PLUGIN(class_name) class_name g_Plugin;  \
-                                  Plugin* __PUBLIC get_plugin() { return &g_Plugin; }
+                                  __PUBLIC Plugin* get_plugin() { return &g_Plugin; }
 
-class __PUBLIC Plugin {
+#include "io/network/http/Server.h"
+
+__PUBLIC class Plugin {
 public:
-    void virtual PluginInit()  { } // First PluginInit will be called
-    void virtual PluginEntry() { } // After PluginInit, PluginEntry will be called.
+    virtual void PluginInit(http::Server* server)  { } // First PluginInit will be called
+    virtual void PluginEntry() { } // After PluginInit, PluginEntry will be called.
 private:
 protected:
 };

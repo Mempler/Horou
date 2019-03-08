@@ -21,5 +21,5 @@ add_library(libhorou SHARED
         io/packets/server_packets/LoginResponse.cpp
         Plugin.cpp Plugin.h)
 
-target_link_libraries(libhorou pthread ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+target_link_libraries(libhorou pthread dl ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 set_target_properties(libhorou PROPERTIES PREFIX "")

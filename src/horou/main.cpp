@@ -19,15 +19,24 @@ copies or substantial portions of the Software.
 #include <io/network/http/Server.h>
 
 #include "handlers/bancho/HTTPHandler.h"
+#include "managers/PluginManager.h"
 
 using namespace boost;
 
 int main() {
     asio::io_service IO_Service;
-
     http::Server server(IO_Service, "0.0.0.0", 1341);
-    server.RegisterHandler("/", HTTPHandler);
-    server.Start();
 
+
+    PluginManager pl_mng("plugins");
+    pl_mng.LoadAll(&server);
+
+    server.RegisterHandler("/", HTTPHandler);
+
+    pl_mng.ExecuteAll();
+
+    server.Start();
+    
+    pl_mng.UnloadAll();
     return 0;
 }

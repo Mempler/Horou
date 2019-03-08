@@ -15,14 +15,24 @@ copies or substantial portions of the Software.
 #ifndef HOROU_PLUGINMANAGER_H
 #define HOROU_PLUGINMANAGER_H
 
-class Plugin {
-public:
-private:
-protected:
-};
+#include <string>
+#include <unordered_map>
+#include <Plugin.h>
+#include <io/network/http/Server.h>
 
 class PluginManager {
+public:
+    explicit PluginManager(std::string plugin_path);
 
+    Plugin* Load(std::string name);
+    void Unload(std::string name);
+
+    void ExecuteAll();
+    void LoadAll(http::Server* server);
+    void UnloadAll();
+private:
+    std::unordered_map<std::string, std::pair<Plugin*, void*>> plugins;
+    std::string plugin_path;
 };
 
 #endif //HOROU_PLUGINMANAGER_H

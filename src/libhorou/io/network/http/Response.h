@@ -16,8 +16,8 @@ copies or substantial portions of the Software.
 #define HOROU_RESPONSE_H
 
 #include <boost/asio.hpp>
-#include <boost/unordered_map.hpp>
 
+#include <unordered_map>
 #include "../../buffer/Buffer.h"
 
 namespace http {
@@ -43,7 +43,7 @@ namespace http {
 
         boost::asio::ip::tcp::socket* mSocket;
 
-        boost::unordered_map<std::string, std::string> mHeaders;
+        std::unordered_map<std::string, std::string> mHeaders;
     };
 }
 
