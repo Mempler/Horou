@@ -12,31 +12,18 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
+#include <eventargs/PacketManagerArgs.h>
 #include <iostream>
-#include <boost/asio.hpp>
+#include "PacketManager.h"
 
-#include <io/network/http/Server.h>
+bool ManagePackets(EventArgs* fargs) {
+    auto args = (PacketManagerArgs*) fargs;
 
-#include "handlers/bancho/HTTPHandler.h"
-#include "managers/PluginManager.h"
+    switch (args->PacketId) {
+        default:
+            std::cout << "Unkown PacketId: " + std::to_string(args->PacketId) << std::endl;
+            args->Data.DumpToLog();
+    }
 
-
-using namespace boost;
-
-int main() {
-    asio::io_service IO_Service;
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-
-
-    PluginManager pl_mng("plugins");
-    pl_mng.LoadAll(&server);
-
-    server.RegisterHandler("/", HTTPHandler);
-
-    pl_mng.ExecuteAll();
-
-    server.Start();
-    
-    pl_mng.UnloadAll();
-    return 0;
+    return true;
 }

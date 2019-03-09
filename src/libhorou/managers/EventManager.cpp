@@ -12,31 +12,26 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
+#include "EventManager.h"
 
-#include <io/network/http/Server.h>
+EventManager g_EventManager;
 
-#include "handlers/bancho/HTTPHandler.h"
-#include "managers/PluginManager.h"
+void EventManager::CollectGarbage() {
+    for (auto x : this->events) {
+        std::vector<EventFunc> new_events;
+        for (auto z : x.second) {
+            if (z != nullptr)
+                new_events.push_back(z);
+        }
+        x.second = new_events;
+    }
+}
 
+void EventManager::RegisterEvent(int Id, EventFunc func) {
+    this->events[Id].push_back(func);
+}
 
-using namespace boost;
-
-int main() {
-    asio::io_service IO_Service;
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-
-
-    PluginManager pl_mng("plugins");
-    pl_mng.LoadAll(&server);
-
-    server.RegisterHandler("/", HTTPHandler);
-
-    pl_mng.ExecuteAll();
-
-    server.Start();
-    
-    pl_mng.UnloadAll();
-    return 0;
+void EventManager::RunEvent(int Id, EventArgs* args) {
+    for (auto ev : this->events[Id])
+        if (ev(args)) break;
 }

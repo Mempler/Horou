@@ -11,6 +11,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_executable(Horou
         main.cpp managers/PluginManager.cpp handlers/bancho/HTTPHandler.cpp
-)
+        events/PacketManager.cpp)
 
 target_link_libraries(Horou libhorou pthread ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})

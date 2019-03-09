@@ -19,7 +19,9 @@ add_library(libhorou SHARED
         io/packets/Packet.cpp
         io/packets/server_packets/fun/Announce.cpp
         io/packets/server_packets/LoginResponse.cpp
-        Plugin.cpp Plugin.h)
+        Plugin.cpp
+        managers/EventManager.cpp
+        objects/Presence.cpp)
 
 target_link_libraries(libhorou pthread dl ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
 set_target_properties(libhorou PROPERTIES PREFIX "")

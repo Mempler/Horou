@@ -12,31 +12,34 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
+#ifndef HOROU_EVENTMANAGER_H
+#define HOROU_EVENTMANAGER_H
 
-#include <io/network/http/Server.h>
+#include <unordered_map>
+#include <vector>
 
-#include "handlers/bancho/HTTPHandler.h"
-#include "managers/PluginManager.h"
+#define REGISTER_EVENT(EventId, EventFunction) g_EventManager.RegisterEvent(EventId, EventFunction)
 
-
-using namespace boost;
-
-int main() {
-    asio::io_service IO_Service;
-    http::Server server(IO_Service, "0.0.0.0", 1341);
+#define EID_PACKET_MANAGER 0x88FF1145
 
 
-    PluginManager pl_mng("plugins");
-    pl_mng.LoadAll(&server);
+struct EventArgs {
 
-    server.RegisterHandler("/", HTTPHandler);
+};
 
-    pl_mng.ExecuteAll();
+typedef bool (*EventFunc)(EventArgs* args);
 
-    server.Start();
-    
-    pl_mng.UnloadAll();
-    return 0;
-}
+class EventManager {
+public:
+    void CollectGarbage();
+
+    void RegisterEvent(int Id, EventFunc func);
+    void RunEvent(int Id, EventArgs* args);
+
+private:
+    std::unordered_map<int, std::vector<EventFunc>> events;
+};
+
+extern EventManager g_EventManager;
+
+#endif //HOROU_EVENTMANAGER_H

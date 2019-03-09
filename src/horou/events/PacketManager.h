@@ -12,31 +12,11 @@ The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 */
 
-#include <iostream>
-#include <boost/asio.hpp>
+#ifndef HOROU_PACKETMANAGER_H
+#define HOROU_PACKETMANAGER_H
 
-#include <io/network/http/Server.h>
+#include <managers/EventManager.h>
 
-#include "handlers/bancho/HTTPHandler.h"
-#include "managers/PluginManager.h"
+bool ManagePackets(EventArgs* args);
 
-
-using namespace boost;
-
-int main() {
-    asio::io_service IO_Service;
-    http::Server server(IO_Service, "0.0.0.0", 1341);
-
-
-    PluginManager pl_mng("plugins");
-    pl_mng.LoadAll(&server);
-
-    server.RegisterHandler("/", HTTPHandler);
-
-    pl_mng.ExecuteAll();
-
-    server.Start();
-    
-    pl_mng.UnloadAll();
-    return 0;
-}
+#endif //HOROU_PACKETMANAGER_H
